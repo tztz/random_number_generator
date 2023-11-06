@@ -1,0 +1,85 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Random number generator</title>
+    <style>
+      .noselect {
+        -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none; /* Safari */
+        -khtml-user-select: none; /* Konqueror HTML */
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+        user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: monospace, Arial, Helvetica, sans-serif;
+        border: 10px solid green;
+      }
+
+      .absolute-center {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        display: flex;
+        justify-content: center; /* align horizontal */
+        align-items: center; /* align vertical */
+      }
+
+      #number {
+        font-size: 40vh;
+        font-weight: bold;
+        color: green;
+      }
+    </style>
+    <script lang="javascript">
+      var speed = 80;
+      var calcInterval;
+      var rndArray = new Uint8Array(2);
+
+      function pad(n) {
+        return (""+n).padStart(3, '0');
+      }
+
+      function getRandomInt() {
+        self.crypto.getRandomValues(rndArray);
+        return pad(rndArray[0]) + "-" + pad(rndArray[1]);
+      }
+
+      function setNumber(number) {
+        document.getElementById('number').innerHTML = number;
+      }
+
+      function calc() {
+        calcInterval = window.setInterval(function rndNumber() {
+          setNumber(getRandomInt());
+        }, speed);
+      }
+
+      function startStopCalculator() {
+        if (calcInterval) {
+          window.clearInterval(calcInterval);
+          calcInterval = null;
+        } else {
+          calc();
+        }
+      }
+    </script>
+  </head>
+  <body class="noselect">
+    <div
+      id="number"
+      class="absolute-center"
+      onclick="startStopCalculator()"
+    ></div>
+    <script lang="javascript">
+      startStopCalculator();
+    </script>
+  </body>
+</html>
